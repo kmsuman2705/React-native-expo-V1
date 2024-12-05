@@ -1,12 +1,11 @@
 const express = require('express');
-const { registerCollege, loginCollege } = require('../controllers/collegeController'); // Import the controller functions
-
 const router = express.Router();
+const { registerCollege, loginCollege, getCollegeProfile, updateCollegeProfile } = require('../controllers/collegeController');
+const authMiddleware = require('../middleware/auth'); // Middleware for token validation
 
-// Register Route
 router.post('/register', registerCollege);
-
-// Login Route
 router.post('/login', loginCollege);
+router.get('/profile/:collegeId', authMiddleware, getCollegeProfile);
+router.put('/profile/:collegeId', authMiddleware, updateCollegeProfile);
 
 module.exports = router;
